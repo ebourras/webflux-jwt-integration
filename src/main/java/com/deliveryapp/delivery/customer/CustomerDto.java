@@ -1,8 +1,5 @@
 package com.deliveryapp.delivery.customer;
 
-import com.deliveryapp.delivery.delivery.DeliveryMethod;
-import com.deliveryapp.delivery.delivery.DeliveryMethodEnum;
-
 public class CustomerDto {
 
     private String customerId;
@@ -15,6 +12,10 @@ public class CustomerDto {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public CustomerDto() {
+
     }
 
     public String getCustomerId() {
