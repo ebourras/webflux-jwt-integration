@@ -1,0 +1,5 @@
+FROM openjdk:21-jdk-alpine
+LABEL maintainer ="deliveryApp"
+ADD target/delivery-0.0.1-SNAPSHOT.jar delivery-0.0.1-SNAPSHOT.jar
+
+ENTRYPOINT ["java","-jar","delivery-0.0.1-SNAPSHOT.jar"]
