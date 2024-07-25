@@ -5,7 +5,6 @@ DeliveryApp
 
 ## Description
 
-
 Delivery App is a simple reactive rest Api project that allows customers through exposed API's to
 [] choose their delivery method
 [] choose day and timeslot for their deliveries
@@ -31,6 +30,11 @@ If something changed on the project run :
 
 $ cd bookdelivery
 $ docker-compose up --build
+
+## Documentation
+you can explore Api documentation through swagger UI
+
+http://localhost:8080/swagger-ui/
 
 ## Test and Deploy
 
