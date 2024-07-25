@@ -2,9 +2,10 @@ package com.deliveryapp.delivery.service;
 
 
 import com.deliveryapp.delivery.dto.DeliveryMethodDto;
+import com.deliveryapp.delivery.exception.ResourceNotFoundException;
+import com.deliveryapp.delivery.mappers.DeliveryMethodMapper;
 import com.deliveryapp.delivery.model.DeliveryMethod;
 import com.deliveryapp.delivery.repository.DeliveryMethodRepository;
-import com.deliveryapp.delivery.mappers.DeliveryMethodMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -26,8 +27,12 @@ public class DeliveryMethodServiceImpl implements DeliveryMethodService {
 
     @Override
     public Mono<DeliveryMethodDto> getDeliveryMethod(String deliveryMethodId) {
+
         Mono<DeliveryMethod> deliveryMethodMono = deliveryMethodRepository.findById(deliveryMethodId);
-        return deliveryMethodMono.map((DeliveryMethodMapper.INSTANCE::mapDeliveryMethodToDto));
+
+        return deliveryMethodMono
+                .flatMap(deliveryMethod -> deliveryMethodMono.map((DeliveryMethodMapper.INSTANCE::mapDeliveryMethodToDto)))
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Delivery Method not found with id: " + deliveryMethodId)));
     }
 
     @Override

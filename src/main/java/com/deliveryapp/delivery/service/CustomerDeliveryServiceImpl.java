@@ -1,11 +1,12 @@
 package com.deliveryapp.delivery.service;
 
 import com.deliveryapp.delivery.dto.CustomerDeliveryDto;
+import com.deliveryapp.delivery.exception.ResourceNotFoundException;
+import com.deliveryapp.delivery.mappers.CustomerDeliveryMapper;
 import com.deliveryapp.delivery.model.Customer;
-import com.deliveryapp.delivery.repository.CustomerRepository;
 import com.deliveryapp.delivery.model.CustomerDelivery;
 import com.deliveryapp.delivery.repository.CustomerDeliveryRepository;
-import com.deliveryapp.delivery.mappers.CustomerDeliveryMapper;
+import com.deliveryapp.delivery.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,12 @@ public class CustomerDeliveryServiceImpl implements  CustomerDeliveryService{
 
     @Override
     public Mono<CustomerDeliveryDto> getCustomerDelivery(String customerId) {
+
         Mono<CustomerDelivery> customerDeliveryMono = customerDeliveryRepository.findById(customerId);
-        return customerDeliveryMono.map((CustomerDeliveryMapper.INSTANCE::mapCustomerDeliveryToDto));
+
+        return customerDeliveryMono
+                .flatMap(customer -> customerDeliveryMono.map((CustomerDeliveryMapper.INSTANCE::mapCustomerDeliveryToDto)))
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("No deliveries found for customer : " + customerId)));
     }
 
     @Override
