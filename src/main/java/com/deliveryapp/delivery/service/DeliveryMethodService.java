@@ -1,5 +1,6 @@
-package com.deliveryapp.delivery.delivery;
+package com.deliveryapp.delivery.service;
 
+import com.deliveryapp.delivery.dto.DeliveryMethodDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import reactor.core.publisher.Flux;

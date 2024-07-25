@@ -1,7 +1,10 @@
-package com.deliveryapp.delivery.customer;
+package com.deliveryapp.delivery.service;
 
 
-import com.deliveryapp.delivery.delivery.DeliveryMethod;
+import com.deliveryapp.delivery.dto.CustomerDto;
+import com.deliveryapp.delivery.model.Customer;
+import com.deliveryapp.delivery.repository.CustomerRepository;
+import com.deliveryapp.delivery.utils.CustomerMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

@@ -1,8 +1,4 @@
-package com.deliveryapp.delivery.deliverymanagement;
-
-import com.deliveryapp.delivery.customer.Customer;
-import com.deliveryapp.delivery.delivery.DeliveryMethod;
-import com.deliveryapp.delivery.utils.TimeSlot;
+package com.deliveryapp.delivery.dto;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

@@ -1,6 +1,8 @@
-package com.deliveryapp.delivery.delivery;
+package com.deliveryapp.delivery.controller;
 
 
+import com.deliveryapp.delivery.dto.DeliveryMethodDto;
+import com.deliveryapp.delivery.service.DeliveryMethodService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

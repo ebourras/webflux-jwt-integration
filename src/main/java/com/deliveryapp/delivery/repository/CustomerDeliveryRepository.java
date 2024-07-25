@@ -1,9 +1,8 @@
-package com.deliveryapp.delivery.deliverymanagement;
+package com.deliveryapp.delivery.repository;
 
+import com.deliveryapp.delivery.model.CustomerDelivery;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
-
-import java.util.ArrayList;
 
 public interface CustomerDeliveryRepository extends ReactiveCrudRepository<CustomerDelivery, String> {
 

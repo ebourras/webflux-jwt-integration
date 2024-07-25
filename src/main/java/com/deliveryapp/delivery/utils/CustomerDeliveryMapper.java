@@ -1,7 +1,7 @@
-package com.deliveryapp.delivery.deliverymanagement;
+package com.deliveryapp.delivery.utils;
 
-import com.deliveryapp.delivery.delivery.DeliveryMethod;
-import com.deliveryapp.delivery.delivery.DeliveryMethodDto;
+import com.deliveryapp.delivery.dto.CustomerDeliveryDto;
+import com.deliveryapp.delivery.model.CustomerDelivery;
 
 public class CustomerDeliveryMapper {
 

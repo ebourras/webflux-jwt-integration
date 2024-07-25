@@ -1,15 +1,16 @@
-package com.deliveryapp.delivery.deliverymanagement;
+package com.deliveryapp.delivery.service;
 
-import com.deliveryapp.delivery.customer.Customer;
-import com.deliveryapp.delivery.customer.CustomerRepository;
+import com.deliveryapp.delivery.dto.CustomerDeliveryDto;
+import com.deliveryapp.delivery.model.Customer;
+import com.deliveryapp.delivery.repository.CustomerRepository;
+import com.deliveryapp.delivery.model.CustomerDelivery;
+import com.deliveryapp.delivery.repository.CustomerDeliveryRepository;
+import com.deliveryapp.delivery.utils.CustomerDeliveryMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import static org.springframework.web.servlet.function.ServerResponse.ok;
 
 
 @Service

@@ -1,4 +1,7 @@
-package com.deliveryapp.delivery.customer;
+package com.deliveryapp.delivery.utils;
+
+import com.deliveryapp.delivery.dto.CustomerDto;
+import com.deliveryapp.delivery.model.Customer;
 
 public class CustomerMapper {
 

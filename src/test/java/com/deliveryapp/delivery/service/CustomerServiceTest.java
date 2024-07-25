@@ -1,9 +1,8 @@
 package com.deliveryapp.delivery.service;
 
-import com.deliveryapp.delivery.customer.Customer;
-import com.deliveryapp.delivery.customer.CustomerDto;
-import com.deliveryapp.delivery.customer.CustomerRepository;
-import com.deliveryapp.delivery.customer.CustomerServiceImpl;
+import com.deliveryapp.delivery.model.Customer;
+import com.deliveryapp.delivery.dto.CustomerDto;
+import com.deliveryapp.delivery.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.Objects;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

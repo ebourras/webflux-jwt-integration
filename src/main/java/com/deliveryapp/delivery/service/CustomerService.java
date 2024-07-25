@@ -1,5 +1,6 @@
-package com.deliveryapp.delivery.customer;
+package com.deliveryapp.delivery.service;
 
+import com.deliveryapp.delivery.dto.CustomerDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
