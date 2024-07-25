@@ -1,4 +1,4 @@
-package com.deliveryapp.delivery.customer;
+package com.deliveryapp.delivery.dto;
 
 public class CustomerDto {
 

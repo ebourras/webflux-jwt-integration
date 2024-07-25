@@ -1,15 +1,17 @@
-package com.deliveryapp.delivery.deliverymanagement;
+package com.deliveryapp.delivery.service;
 
-import com.deliveryapp.delivery.customer.Customer;
-import com.deliveryapp.delivery.customer.CustomerRepository;
+import com.deliveryapp.delivery.dto.CustomerDeliveryDto;
+import com.deliveryapp.delivery.exception.ResourceNotFoundException;
+import com.deliveryapp.delivery.mappers.CustomerDeliveryMapper;
+import com.deliveryapp.delivery.model.Customer;
+import com.deliveryapp.delivery.model.CustomerDelivery;
+import com.deliveryapp.delivery.repository.CustomerDeliveryRepository;
+import com.deliveryapp.delivery.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import static org.springframework.web.servlet.function.ServerResponse.ok;
 
 
 @Service
@@ -25,23 +27,27 @@ public class CustomerDeliveryServiceImpl implements  CustomerDeliveryService{
     @Override
     public Mono<CustomerDeliveryDto> saveCustomerDelivery(CustomerDeliveryDto customerDeliveryDto) {
 
-        CustomerDelivery customerDelivery = CustomerDeliveryMapper.mapToCustomerDelivery(customerDeliveryDto);
-        Mono<CustomerDelivery> savecCustomerDelivery = customerDeliveryRepository.save(customerDelivery);
-        return savecCustomerDelivery.map(CustomerDeliveryMapper::mapToCustomerDeliveryDto);
+        CustomerDelivery customerDelivery = CustomerDeliveryMapper.INSTANCE.mapDtoToCustomerDelivery(customerDeliveryDto);
+        Mono<CustomerDelivery> savedCustomerDelivery = customerDeliveryRepository.save(customerDelivery);
+        return savedCustomerDelivery.map(CustomerDeliveryMapper.INSTANCE::mapCustomerDeliveryToDto);
 
     }
 
     @Override
     public Mono<CustomerDeliveryDto> getCustomerDelivery(String customerId) {
+
         Mono<CustomerDelivery> customerDeliveryMono = customerDeliveryRepository.findById(customerId);
-        return customerDeliveryMono.map((CustomerDeliveryMapper::mapToCustomerDeliveryDto));
+
+        return customerDeliveryMono
+                .flatMap(customer -> customerDeliveryMono.map((CustomerDeliveryMapper.INSTANCE::mapCustomerDeliveryToDto)))
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("No deliveries found for customer : " + customerId)));
     }
 
     @Override
     public Flux<CustomerDeliveryDto> getAllCustomersDeliveries() {
         Flux<CustomerDelivery> customerDeliveryFlux = customerDeliveryRepository.findAll();
         return customerDeliveryFlux
-                .map(CustomerDeliveryMapper::mapToCustomerDeliveryDto)
+                .map(CustomerDeliveryMapper.INSTANCE::mapCustomerDeliveryToDto)
                 .switchIfEmpty(Flux.empty());
     }
 

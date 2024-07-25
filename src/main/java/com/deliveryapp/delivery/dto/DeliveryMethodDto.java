@@ -1,4 +1,6 @@
-package com.deliveryapp.delivery.delivery;
+package com.deliveryapp.delivery.dto;
+
+import com.deliveryapp.delivery.utils.DeliveryMethodEnum;
 
 import java.util.Date;
 

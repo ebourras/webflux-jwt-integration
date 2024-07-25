@@ -1,6 +1,11 @@
-package com.deliveryapp.delivery.delivery;
+package com.deliveryapp.delivery.service;
 
 
+import com.deliveryapp.delivery.dto.DeliveryMethodDto;
+import com.deliveryapp.delivery.exception.ResourceNotFoundException;
+import com.deliveryapp.delivery.mappers.DeliveryMethodMapper;
+import com.deliveryapp.delivery.model.DeliveryMethod;
+import com.deliveryapp.delivery.repository.DeliveryMethodRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -14,23 +19,27 @@ public class DeliveryMethodServiceImpl implements DeliveryMethodService {
 
     @Override
     public Mono<DeliveryMethodDto> saveDeliveryMethod(DeliveryMethodDto DeliveryMethodDto) {
-        DeliveryMethod deliveryMethod = DeliveryMethodMapper.mapToDeliveryMethod(DeliveryMethodDto);
+        DeliveryMethod deliveryMethod = DeliveryMethodMapper.INSTANCE.mapDtoToDeliveryMethod(DeliveryMethodDto);
         Mono<DeliveryMethod> saveddeliveryMethod = deliveryMethodRepository.save(deliveryMethod);
         return saveddeliveryMethod
-                .map(DeliveryMethodMapper::mapToDeliveryMethodDto);
+                .map(DeliveryMethodMapper.INSTANCE::mapDeliveryMethodToDto);
     }
 
     @Override
     public Mono<DeliveryMethodDto> getDeliveryMethod(String deliveryMethodId) {
+
         Mono<DeliveryMethod> deliveryMethodMono = deliveryMethodRepository.findById(deliveryMethodId);
-        return deliveryMethodMono.map((DeliveryMethodMapper::mapToDeliveryMethodDto));
+
+        return deliveryMethodMono
+                .flatMap(deliveryMethod -> deliveryMethodMono.map((DeliveryMethodMapper.INSTANCE::mapDeliveryMethodToDto)))
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Delivery Method not found with id: " + deliveryMethodId)));
     }
 
     @Override
     public Flux<DeliveryMethodDto> getAllDeliveryMethods() {
         Flux<DeliveryMethod> deliveryMethodFlux = deliveryMethodRepository.findAll();
         return deliveryMethodFlux
-                .map(DeliveryMethodMapper::mapToDeliveryMethodDto)
+                .map(DeliveryMethodMapper.INSTANCE::mapDeliveryMethodToDto)
                 .switchIfEmpty(Flux.empty());
     }
 

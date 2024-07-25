@@ -1,4 +1,4 @@
-package com.deliveryapp.delivery.delivery;
+package com.deliveryapp.delivery.utils;
 
 public enum DeliveryMethodEnum {
 

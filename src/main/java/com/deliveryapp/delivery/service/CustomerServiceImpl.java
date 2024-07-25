@@ -1,7 +1,11 @@
-package com.deliveryapp.delivery.customer;
+package com.deliveryapp.delivery.service;
 
 
-import com.deliveryapp.delivery.delivery.DeliveryMethod;
+import com.deliveryapp.delivery.dto.CustomerDto;
+import com.deliveryapp.delivery.exception.ResourceNotFoundException;
+import com.deliveryapp.delivery.mappers.CustomerMapper;
+import com.deliveryapp.delivery.model.Customer;
+import com.deliveryapp.delivery.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -15,23 +19,25 @@ public class CustomerServiceImpl implements  CustomerService {
 
     @Override
     public Mono<CustomerDto> saveCustomer(CustomerDto customerDto) {
-        Customer customer = CustomerMapper.mapToCustomer(customerDto);
+        Customer customer = CustomerMapper.INSTANCE.mapDtoToCustomer(customerDto);
         Mono<Customer> savedCustomer = customerRepository.save(customer);
         return savedCustomer
-                .map(CustomerMapper::mapToCustomerDto);
+                .map(CustomerMapper.INSTANCE::mapCustomerToDto);
     }
 
     @Override
     public Mono<CustomerDto> getCustomer(String customerId) {
         Mono<Customer> customerMono = customerRepository.findById(customerId);
-        return customerMono.map((CustomerMapper::mapToCustomerDto));
+        return customerMono
+                .flatMap(customer -> customerMono.map((CustomerMapper.INSTANCE::mapCustomerToDto)))
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("Resource not found with id: " + customerId)));
     }
 
     @Override
     public Flux<CustomerDto> getAllCustomers() {
         Flux<Customer> customerFlux = customerRepository.findAll();
         return customerFlux
-                .map(CustomerMapper::mapToCustomerDto)
+                .map(CustomerMapper.INSTANCE::mapCustomerToDto)
                 .switchIfEmpty(Flux.empty());
     }
 
@@ -45,7 +51,7 @@ public class CustomerServiceImpl implements  CustomerService {
             existingCustomer.setLastName(customerDto.getLastName());
             existingCustomer.setEmail(customerDto.getEmail());
             return customerRepository.save(existingCustomer);
-        }).map((CustomerMapper::mapToCustomerDto));
+        }).map((CustomerMapper.INSTANCE::mapCustomerToDto));
     }
 
     @Override

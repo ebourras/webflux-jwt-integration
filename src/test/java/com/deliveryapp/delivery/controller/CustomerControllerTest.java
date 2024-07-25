@@ -1,10 +1,8 @@
 package com.deliveryapp.delivery.controller;
 
-import com.deliveryapp.delivery.customer.CustomerController;
-import com.deliveryapp.delivery.customer.CustomerDto;
-import com.deliveryapp.delivery.customer.CustomerRepository;
-import com.deliveryapp.delivery.customer.CustomerService;
-import org.json.JSONArray;
+import com.deliveryapp.delivery.dto.CustomerDto;
+import com.deliveryapp.delivery.repository.CustomerRepository;
+import com.deliveryapp.delivery.service.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

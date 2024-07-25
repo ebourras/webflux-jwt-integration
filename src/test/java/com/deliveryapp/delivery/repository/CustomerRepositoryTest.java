@@ -1,7 +1,6 @@
 package com.deliveryapp.delivery.repository;
 
-import com.deliveryapp.delivery.customer.Customer;
-import com.deliveryapp.delivery.customer.CustomerRepository;
+import com.deliveryapp.delivery.model.Customer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.reactivestreams.Publisher;
