@@ -30,7 +30,6 @@ public class CustomerDeliveryServiceImpl implements  CustomerDeliveryService{
         CustomerDelivery customerDelivery = CustomerDeliveryMapper.INSTANCE.mapDtoToCustomerDelivery(customerDeliveryDto);
         Mono<CustomerDelivery> savedCustomerDelivery = customerDeliveryRepository.save(customerDelivery);
         return savedCustomerDelivery.map(CustomerDeliveryMapper.INSTANCE::mapCustomerDeliveryToDto);
-
     }
 
     @Override
@@ -53,7 +52,15 @@ public class CustomerDeliveryServiceImpl implements  CustomerDeliveryService{
 
     @Override
     public Mono<CustomerDeliveryDto> updateCustomerDelivery(CustomerDeliveryDto customerDeliveryDto, String customerId) {
-        return null;
+
+        return customerDeliveryRepository.findCustomerDeliveryByCustomerId(customerId)
+                .flatMap(customerDelivery -> {
+                            CustomerDelivery customerDeliveryUpdate = CustomerDeliveryMapper.INSTANCE.mapDtoToCustomerDelivery(customerDeliveryDto);
+                            return customerDeliveryRepository.save(customerDeliveryUpdate)
+                                    .map(CustomerDeliveryMapper.INSTANCE::mapCustomerDeliveryToDto);
+                        }
+                )
+                .switchIfEmpty(Mono.error(new ResourceNotFoundException("No Customer Delivery found for customer: " + customerId)));
     }
 
     @Override
