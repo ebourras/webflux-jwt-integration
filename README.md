@@ -9,6 +9,17 @@ Delivery App is a simple reactive rest Api project that allows customers through
 [] choose their delivery method
 [] choose day and timeslot for their deliveries
 
+## Architecture
+
+This project is based on 
+
+1-SpringBoot 3
+2-Spring WebFlux for asynchronous request process
+3-Reactive MongoDB that fits well with WebFlux
+4-Lombock for less code
+5-MapStruct framework for mapping between DTO's and entities
+6-Open API for API documentation
+7-JWT Reactive authentication to secure the APIS
 
 ## Run App
 there are two ways to run the application
@@ -30,6 +41,16 @@ If something changed on the project run :
 
 $ cd bookdelivery
 $ docker-compose up --build
+
+## API Authentication
+
+Before you can access the API's, you should send an POST authentication request
+
+http://localhost:8080/login
+username : mehdi
+password : password
+
+you will receive a JWT token that you can insert as a bearer token in the Header of the API requests
 
 ## Documentation
 you can explore Api documentation through swagger UI
