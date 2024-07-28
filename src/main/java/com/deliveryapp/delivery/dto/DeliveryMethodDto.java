@@ -19,6 +19,10 @@ public class DeliveryMethodDto {
         this.endTime = endTime;
     }
 
+    public DeliveryMethodDto() {
+
+    }
+
     public String getDeliveryMethodId() {
         return deliveryMethodId;
     }
