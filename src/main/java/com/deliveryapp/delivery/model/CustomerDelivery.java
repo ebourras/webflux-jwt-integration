@@ -1,5 +1,6 @@
 package com.deliveryapp.delivery.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
+@ApiModel("Customer Delivery Association ")
 @Getter
 @Setter
 @NoArgsConstructor
