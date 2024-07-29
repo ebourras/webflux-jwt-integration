@@ -34,7 +34,7 @@ $ mvn spring-boot:run
 
 DOCKER :
 
-$ cd deliveryapp
+$ cd deliveryapp[README.md](README.md)
 $ docker-compose up -d
 
 If something changed on the project run : 
@@ -54,6 +54,7 @@ you will receive a JWT token that you can insert as a bearer token in the Header
 
 ## Documentation
 you can explore Api documentation through swagger UI
+Swagger should be integrated with JWT (done via configuration but can be more specific)
 
 http://localhost:8080/swagger-ui/
 
